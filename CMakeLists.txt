@@ -28,13 +28,15 @@ set(CMAKE_XCODE_GENERATE_SCHEME TRUE)
 set(PLAYDATE_GAME_NAME HEBitmap)
 set(PLAYDATE_GAME_DEVICE HEBitmap_DEVICE)
 
+set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
+
 project(${PLAYDATE_GAME_NAME} C ASM)
 
 if (TOOLCHAIN STREQUAL "armgcc")
-	add_executable(${PLAYDATE_GAME_DEVICE} src/main.c src/hebitmap.c src/hebitmap_prv.c)
+	add_library(${PLAYDATE_GAME_DEVICE} STATIC src/hebitmap.c src/hebitmap_prv.c)
 else()
-	add_library(${PLAYDATE_GAME_NAME} SHARED src/main.c src/hebitmap.c src/hebitmap_prv.c)
+	add_library(${PLAYDATE_GAME_NAME} STATIC src/hebitmap.c src/hebitmap_prv.c)
 endif()
 
-include(${SDK}/C_API/buildsupport/playdate_game.cmake)
+include(${SDK}/C_API/buildsupport/playdate.cmake)
 
