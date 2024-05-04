@@ -53,7 +53,14 @@ heCoinImage.draw(100, 100)
 
 # custom image
 let customImage = gfx.newBitmap(20, 20, kColorBlack)
-let heCustomImage = newHeBitmap(customImage)
+
+## manipulate customImage however you want
+gfx.pushContext(customImage)
+# gfx.fillRectangle etc
+gfx.popContext()
+
+# this copies the image data, further changes to customImage won't be reflected
+let heCustomImage = newHeBitmap(customImage) 
 heCustomImage.draw(50,50)
     
 ```
