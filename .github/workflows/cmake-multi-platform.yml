@@ -59,4 +59,4 @@ jobs:
     - uses: actions/upload-artifact@v4
       with:
         name: libhebitmap-${{ matrix.os }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/libhebitmap.a
+        path: ${{ steps.strings.outputs.build-output-dir }}
