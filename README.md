@@ -3,6 +3,28 @@
     <img src="assets/logo-light-512.png" width="400" alt="HEBitmap logo">
 </picture>
 
+## LibHEBitmap
+This is just a slight modification of the [original HEBitmap](https://github.com/risolvipro/HEBitmap) build process that will produce static library (libhebitmap.a) files instead of a full game. If you are programming in C, you might also just include the original C files in your project. If you are programming in another language such as [Nim](https://github.com/samdze/playdate-nim), this lib might help.
+
+## Compiling
+
+### For device (make sure you have the arm toolchain installed)
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_TOOLCHAIN_FILE=/Users/ninovanhooff/Developer/PlaydateSDK/C_API/buildsupport/arm.cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+```
+
+### For simulator
+```bash
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+make
+```
+
+
 ## HEBitmap (Playdate)
 
 HEBitmap (**H**igh **E**fficiency Bitmap) is a custom implementation of the drawBitmap function (Playdate SDK).
