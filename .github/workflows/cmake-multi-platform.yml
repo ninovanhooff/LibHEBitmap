@@ -26,7 +26,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
         c_compiler: [gcc]
-        generator: ["MinGW Makefiles", "Unix Makefiles", "MSYS Makefiles", "Ninja"]
+        generator: ["MinGW Makefiles", "Unix Makefiles"]
         include:
           - os: windows-latest
             c_compiler: gcc
@@ -36,8 +36,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: pd-rs/get-playdate-sdk@0.3.4
-
-
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
@@ -58,3 +56,7 @@ jobs:
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
+    - uses: actions/upload-artifact@v4
+        with:
+          name: libhebitmap-${{ matrix.os }}
+          path: ${{ steps.strings.outputs.build-output-dir }}/libhebitmap.a
