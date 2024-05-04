@@ -4,7 +4,7 @@
 </picture>
 
 ## LibHEBitmap
-This is just a slight modification of the [original HEBitmap](https://github.com/risolvipro/HEBitmap) build process that will produce static library (libhebitmap.a) files instead of a full game. If you are programming in C, you might also just include the original C files in your project. If you are programming in another language such as [Nim](https://github.com/samdze/playdate-nim), this lib might help.
+This is just a slight modification of the [original HEBitmap](https://github.com/risolvipro/HEBitmap) build process that will produce static library (libhebitmap.a) files instead of a full game. If you are programming in C, you might also just include the original C files in your project. If you are programming in another language such as [Nim](https://github.com/samdze/playdate-nim) (see below), this lib might help.
 
 ## Compiling
 
@@ -24,6 +24,10 @@ cmake -DCMAKE_BUILD_TYPE=Debug ..
 make
 ```
 
+## Usage in Nim
+When using Nim, you can use the [bindings in the nim folder](nim/hebitmap.nim) to use the lib from your project
+
+Note that this is in the Proof of Concept stage. It is usable, but I haven't tested it for memory leaks. Pull requests are welcome.
 
 ## HEBitmap (Playdate)
 
