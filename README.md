@@ -29,6 +29,36 @@ When using Nim, you can use the [bindings in the nim folder](nim/hebitmap.nim) t
 
 Note that this is in the Proof of Concept stage. It is usable, but I haven't tested it for memory leaks. Pull requests are welcome.
 
+Make sure to call the initializer once at the start of your program
+
+```nim
+import playdate/api
+import hebitmap
+
+proc handler(event: PDSystemEvent, keycode: uint) {.raises: [].} =
+  if event == kEventInit:
+    heBitmapSetPlaydateAPI(playdate)
+    # ... other setup code
+```
+
+Then
+
+```nim
+import playdate/api
+import hebitmap
+
+# from file
+let heCoinImage = gfx.newHeBitmap("images/coin")
+heCoinImage.draw(100, 100)
+
+# custom image
+let customImage = gfx.newBitmap(20, 20, kColorBlack)
+let heCustomImage = newHeBitmap(customImage)
+heCustomImage.draw(50,50)
+    
+```
+
+
 ## HEBitmap (Playdate)
 
 HEBitmap (**H**igh **E**fficiency Bitmap) is a custom implementation of the drawBitmap function (Playdate SDK).
