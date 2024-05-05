@@ -45,13 +45,9 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-    - name: Set Environment Variables
-      run: |
-        if [ "$RUNNER_OS" == "Windows" ]; then
-          $env:PLAYDATE_SDK_PATH = "${{ steps.sdk.outputs.root }}"
-        else
-          echo "$RUNNER_OS : no need to set ebnv variables"
-        fi
+    - name: Set environment variable on Windows
+      run: $env:PLAYDATE_SDK_PATH = "${{ steps.sdk.outputs.root }}"
+      if: runner.os == 'Windows'
     - name: Configure CMake
       env:
         PLAYDATE_SDK_PATH: ${{ steps.sdk.outputs.root }}
