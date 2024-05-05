@@ -10,9 +10,6 @@ on:
 
 jobs:
   build:
-    defaults:
-      run:
-        shell: bash
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -41,6 +38,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: pd-rs/get-playdate-sdk@0.3.4
+      id: sdk
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
@@ -49,6 +47,8 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Configure CMake
+      env:
+        PLAYDATE_SDK_PATH: ${{ steps.sdk.outputs.root }}
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
@@ -59,6 +59,8 @@ jobs:
         -S ${{ github.workspace }}
 
     - name: Build
+      env:
+        PLAYDATE_SDK_PATH: ${{ steps.sdk.outputs.root }}
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
     - uses: actions/upload-artifact@v4
