@@ -30,8 +30,10 @@ jobs:
         include:
           - os: windows-latest
             c_compiler: gcc
+            generator: "MinGW Makefiles"
           - os: ubuntu-latest
             c_compiler: gcc
+            generator: "Unix Makefiles"
 
     steps:
     - uses: actions/checkout@v4
