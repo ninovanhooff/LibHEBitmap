@@ -45,19 +45,21 @@ jobs:
       shell: bash
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+    # Convert path to old-win-format:
     - name: Set environment variable on Windows
-      run: $env:PLAYDATE_SDK_PATH = "${{ steps.sdk.outputs.root }}"
       if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        PLAYDATE_SDK_PATH=$(cygpath -w "$PLAYDATE_SDK_PATH")
+        echo "PLAYDATE_SDK_PATH=$PLAYDATE_SDK_PATH" >> $GITHUB_ENV
     - name: Configure CMake
-      env:
-        PLAYDATE_SDK_PATH: ${{ steps.sdk.outputs.root }}
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: >
         cmake -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-        -G "${{ matrix.generator }}" 
+        -G "${{ matrix.generator }}"
         -S ${{ github.workspace }}
 
     - name: Build
